@@ -13,8 +13,8 @@ const Header = () => {
           <Navbar.Toggle />
 
           <Navbar.Collapse className="justify-content-center">
-            <Navbar.Text style={{ color: "white" }}>
-              패션 스타일 분석
+            <Navbar.Text style={{ color: "white", fontSize: "1.6em" }}>
+              Fashion Style Analysis
             </Navbar.Text>
           </Navbar.Collapse>
 
