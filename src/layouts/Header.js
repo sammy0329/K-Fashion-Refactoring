@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-
+import { LinkContainer } from "react-router-bootstrap";
 const Header = () => {
   return (
     <header>
@@ -20,8 +20,12 @@ const Header = () => {
 
           <Navbar.Collapse className="justify-content-end">
             <Nav className="ml-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#about">about</Nav.Link>
+              <LinkContainer to="/home">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/about">
+                <Nav.Link>about</Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
