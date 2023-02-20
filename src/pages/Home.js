@@ -7,6 +7,7 @@ import InputImage from "../components/InputImage";
 function Home() {
   return (
     <Layout>
+      <br />
       <IntervalsCarousel />
       <br />
       <Info />
