@@ -1,16 +1,17 @@
-import React from 'react'
-import { Container } from 'react-bootstrap';
+import React from "react";
+import { Container } from "react-bootstrap";
 
 const Footer = () => {
   return (
     <footer>
-        <Container>
-            <div style={{textAlign: "center"}}>
-                &copy; 2023 SJ Company. All Rights Reserved.
-            </div>
-        </Container>
+      <br />
+      <Container>
+        <div style={{ textAlign: "center" }}>
+          &copy; 2023 SJ Company. All Rights Reserved.
+        </div>
+      </Container>
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;
