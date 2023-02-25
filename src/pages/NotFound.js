@@ -1,12 +1,22 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import "./NotFound.css";
+
 
 // 전반적인 404 페이지 완료 이후에 디자인 다시 손보기!!
 
+// body 정가운데 위치하게 하는 style
+const centerbody={
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100vh"
+
+}
+
 const NotFound = () => {
   return (
-    <div className="alertError">
+    <div className="alertError" style={centerbody}>
       <Container>
         <Row>
           <Col>
