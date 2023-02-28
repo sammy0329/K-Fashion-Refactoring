@@ -2,31 +2,63 @@ import React from "react";
 import Layout from "../layouts/Layout";
 import Cards from "../components/Cards";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-
 function Result() {
+  // 내가 받을 데이터 예시
+  const Items = [
+    {
+      productName: "맨투맨1",
+      productStore: "1번 상점",
+      productImg: "https://i.ibb.co/R6RwNxx/grape.jpg",
+      productPrice: "132000",
+      productCategory: "상의",
+      productURL: "https://sammy0329.tistory.com/62",
+    },
+    {
+      productName: "맨투맨2",
+      productStore: "2번 상점",
+      productImg: "https://i.ibb.co/R6RwNxx/grape.jpg",
+      productPrice: "180000",
+      productCategory: "상의",
+      productURL: "https://sammy0329.tistory.com/62",
+    },
+    {
+      productName: "맨투맨3",
+      productStore: "3번 상점",
+      productImg: "https://i.ibb.co/R6RwNxx/grape.jpg",
+      productPrice: "122000",
+      productCategory: "상의",
+      productURL: "https://sammy0329.tistory.com/62",
+    },
+    {
+      productName: "맨투맨4",
+      productStore: "4번 상점",
+      productImg: "https://i.ibb.co/R6RwNxx/grape.jpg",
+      productPrice: "1122000",
+      productCategory: "상의",
+      productURL: "https://sammy0329.tistory.com/62",
+    },
+    {
+      productName: "맨투맨5",
+      productStore: "5번 상점",
+      productImg: "https://i.ibb.co/R6RwNxx/grape.jpg",
+      productPrice: "131000",
+      productCategory: "상의",
+      productURL: "https://sammy0329.tistory.com/62",
+    },
+    {
+      productName: "맨투맨6",
+      productStore: "6번 상점",
+      productImg: "https://i.ibb.co/R6RwNxx/grape.jpg",
+      productPrice: "111000",
+      productCategory: "상의",
+      productURL: "https://sammy0329.tistory.com/62",
+    },
+  ];
+
   return (
     <Layout>
       <br />
-      <Row xs={1} md={2} className="g-4">
-        {Array.from({ length: 4 }).map((_, idx) => (
-          <Col>
-    
-              <Cards
-                productStore="SJ스토어"
-                productName="SJ 맨투맨"
-                productImg="https://i.ibb.co/R6RwNxx/grape.jpg"
-                productPrice="12000"
-                productCategory="상의"
-                productURL="https://sammy0329.tistory.com/62"
-              />
-
-          </Col>
-        ))}
-      </Row>
-
-      <br />
+      <Cards CardList={Items} />
     </Layout>
   );
 }
