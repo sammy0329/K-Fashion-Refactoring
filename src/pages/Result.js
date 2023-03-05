@@ -1,10 +1,11 @@
 import React from "react";
 import Layout from "../layouts/Layout";
 import Cards from "../components/Cards";
+import Styles from "../components/Styles";
 
 function Result() {
   // 내가 받을 데이터 예시
-  const Items = [
+  const CardList = [
     {
       productName: "맨투맨1",
       productStore: "1번 상점",
@@ -55,10 +56,18 @@ function Result() {
     },
   ];
 
+  const StyleList = [
+    { styleName: "섹시", styleRate: "70" },
+    { styleName: "스포티", styleRate: "46" },
+    { styleName: "바캉스", styleRate: "33" },
+  ];
+
   return (
     <Layout>
       <br />
-      <Cards CardList={Items} />
+      <Styles StyleList={StyleList} />
+      <br />
+      <Cards CardList={CardList} />
     </Layout>
   );
 }
