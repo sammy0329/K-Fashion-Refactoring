@@ -8,7 +8,7 @@ const Cards = ({ CardList }) => {
 
   return (
     <Container>
-      <h4>추천 스타일 리스트</h4>
+      <h4>유사 스타일 추천</h4>
       <hr />
       <CardGroup>
         <Row xs={1} md={columnPerRow}>
@@ -35,6 +35,8 @@ const Cards = ({ CardList }) => {
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       <br />
                       Category: {product.productCategory}
+                      <br />
+                      Store: {product.productStore}
                     </Card.Text>
                   </Card.Body>
                 </Card>
