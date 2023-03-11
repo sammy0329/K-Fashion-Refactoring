@@ -15,7 +15,7 @@ const Cards = ({ CardList }) => {
           {CardList &&
             CardList.map((product, idx) => (
               <Col key={idx}>
-                <Card>
+                <Card style={{boxShadow : '1px 5px 5px #006400'}}>
                   <a
                     href={product.productURL}
                     target="_blank"
