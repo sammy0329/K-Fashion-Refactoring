@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import Layout from "../layouts/Layout";
 import Cards from "../components/Cards";
 import Styles from "../components/Styles";
+import axios from 'axios';
 
 function Result() {
   // 내가 받을 데이터 예시
@@ -61,6 +62,21 @@ function Result() {
     { styleName: "스포티", styleRate: "46" },
     { styleName: "바캉스", styleRate: "33" },
   ];
+
+  // const [StyleList,setStyleList] = useState([])
+  // const [CardList, setCardList] = useState([])
+
+  // useEffect(() => {
+  // const url = "https://459fadcd-12dd-4b8c-ad8c-1c3b2ce90b9d.mock.pstmn.io/image";
+  // axios.get(url)
+  // .then(function(response) {
+  //   setCardList(response.data["CardList"]);
+  //   setStyleList(response.data["StyleList"]);
+  //     console.log(response.data["CardList"]);
+  // })
+  // .catch(function(error) {
+  //     console.log("실패");
+  // });}, []);
 
   return (
     <Layout>
