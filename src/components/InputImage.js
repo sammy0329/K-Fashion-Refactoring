@@ -1,96 +1,63 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-// import { LinkContainer } from "react-router-bootstrap";
-import axios from "axios";
+// import axios from "axios";
 
-function InputImage() {
-  const [imageSrc, setImageSrc] = useState("");
+const InputImage = () => {
+  //파일 미리볼 url을 저장해줄 state
+  const [fileImage, setFileImage] = useState("");
 
-  const encodeFileToBase64 = (fileBlob) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        resolve();
-      };
-    });
+  // 파일 저장
+  const saveFileImage = (e) => {
+    setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // const desc = e.target[0].value;
-
-    // event로 file 객체 얻기
-    const upload_file = e.target[1].files[0];
-
-    const formData = new FormData();
-    // formData.append("description", desc);
-    formData.append("files", upload_file);
-    formData.append("enctype", "multipart/form-data");
-
-    // 파일을 업로드 시킬 Server 주소
-    const URL = "http://127.0.0.1:8000/image";
-    console.log(upload_file)
-    axios({
-      method: "post",
-      url: URL,
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }).then(function (response) {
-      console.log(response);
-    });
+  // 파일 삭제
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(fileImage);
+    setFileImage("");
   };
 
   return (
     <>
       <Container>
         <div className="text-center">
-          {imageSrc && (
+          {fileImage && (
             <img
-              src={imageSrc}
+              src={fileImage}
               alt="preview-img"
-              style={{ height: "auto", width: "auto" }}
+              style={{ height: "80vh", width: "40vw" }}
             />
           )}
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <fieldset>
-            <div className="form-group">
-              <label htmlFor="formFile" className="form-label mt-4">
-                Select your file!
-              </label>
+          <div className="form-group">
+            <label className="form-label mt-4">
+              Select your file!
+            </label>
 
-              <Row>
-                <Col xs={15} md={11}>
-                  <input
-                    className="form-control"
-                    type="file"
-                    id="formFile"
-                    accept="image/jpg, image/jpeg, image/png"
-                    onChange={(e) => {
-                      encodeFileToBase64(e.target.files[0]);
-                    }}
-                  />{" "}
-                </Col>
-                <Col xs={1} md={1}>
-                  {/* submit 버튼 클릭시 어떻게 할지 생각해야함 보여주기식으로 바로 result로 넘어가도록 설정 */}
-                  {/* <LinkContainer to="/result"> */}
-                  <button type="submit" className="btn btn-primary">
-                    Submit
-                  </button>
-                  {/* </LinkContainer> */}
-                </Col>
-              </Row>
-            </div>
-          </fieldset>
-        </form>
+            <Row>
+              <Col xs={15} md={11}>
+                <input
+                  className="form-control"
+                  type="file"
+                  id="formFile"
+                  accept="image/*"
+                  onChange={(e) => {
+                    deleteFileImage();
+                    saveFileImage(e);
+                  }}
+                />{" "}
+              </Col>
+              <Col xs={1} md={1}>
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </Col>
+            </Row>
+          </div>
       </Container>
     </>
   );
-}
+};
 
 export default InputImage;
