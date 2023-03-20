@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 
+
+
 const InputImage = () => {
+  const navigate = useNavigate();
   //파일 미리볼 url을 저장해줄 state
   const [fileImage, setFileImage] = useState("");
 
   // 파일 저장
   const saveFileImage = (e) => {
+    // Blob URL Image는 img 태그에 src에 넣으면 가져올 수 있음
     setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
@@ -16,6 +21,16 @@ const InputImage = () => {
     URL.revokeObjectURL(fileImage);
     setFileImage("");
   };
+
+  const handleClick = () => {
+
+    navigate('/result', {
+      state: {
+        fileImage: fileImage,
+      },
+    });
+  }
+  
 
   return (
     <>
@@ -49,9 +64,11 @@ const InputImage = () => {
                 />{" "}
               </Col>
               <Col xs={1} md={1}>
-                <button type="submit" className="btn btn-primary">
+              
+                <button type="submit" className="btn btn-primary" onClick={handleClick}>
                   Submit
                 </button>
+                
               </Col>
             </Row>
           </div>

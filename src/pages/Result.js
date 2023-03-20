@@ -1,10 +1,14 @@
-import React, { useState, useEffect} from "react";
+// import React, { useState, useEffect} from "react";
 import Layout from "../layouts/Layout";
 import Cards from "../components/Cards";
 import Styles from "../components/Styles";
-import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+// import axios from 'axios';
 
-function Result() {
+const Result = () => {
+  // 사용자의 input 사진 넘겨주기 styles 컴포넌트로 넘겨주기
+  const {fileImage} = useLocation().state;
+
   // 내가 받을 데이터 예시
   const CardList = [
     {
@@ -81,7 +85,7 @@ function Result() {
   return (
     <Layout>
       <br />
-      <Styles StyleList={StyleList} />
+      <Styles StyleList={StyleList} fileImage={fileImage}/>
       <br />
       <Cards CardList={CardList} />
     </Layout>
