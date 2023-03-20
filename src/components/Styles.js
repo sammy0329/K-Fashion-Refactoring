@@ -2,22 +2,23 @@ import React from "react";
 import { Container, Row, Col, ProgressBar } from "react-bootstrap";
 import styleData from "./JsonData/StyleData";
 
-const Styles = ({ StyleList }) => {
+const Styles = ({ StyleList, fileImage }) => {
   return (
     <Container>
       <div className="text-center" id="style-body">
-        <img
-          src="https://i.ibb.co/R6RwNxx/grape.jpg"
-          width="auto"
-          height="auto"
-          alt="inputImg"
-        />
+        {fileImage && (
+          <img
+            src={fileImage}
+            alt="input-img"
+            style={{ height: "80vh", width: "40vw" }}
+          />
+        )}
         <br />
         <br />
         <h4 className={`text-${styleData[StyleList[0].styleName]["color"]}`}>
           <strong>{StyleList[0].styleName} 스타일</strong>
         </h4>
- 
+
         <h4 className={`text-${styleData[StyleList[0].styleName]["color"]}`}>
           <strong>{StyleList[0].styleRate}%</strong>
         </h4>
@@ -42,7 +43,6 @@ const Styles = ({ StyleList }) => {
               <br />
             </Col>
           ))}
-
       </Row>
     </Container>
   );
