@@ -7,8 +7,9 @@ import { useLocation } from 'react-router-dom';
 
 const Result = () => {
   // 사용자의 input 사진 넘겨주기 styles 컴포넌트로 넘겨주기
-  const {fileImage} = useLocation().state;
-
+  const {fileImage, resultData} = useLocation().state;
+  console.log(fileImage,resultData);
+  
   // 내가 받을 데이터 예시
   const CardList = [
     {
