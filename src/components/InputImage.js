@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import usePromise from "../lib/usePromise";
 
 import axios from "axios";
 
 const InputImage = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   //파일 미리볼 url을 저장해줄 state
   const [fileImage, setFileImage] = useState("");
   const [reqImage, setReqImage] = useState("");
@@ -29,8 +29,13 @@ const InputImage = () => {
   };
 
   useEffect(() => {
-    if (data != "") {
-      console.log(data);
+    if (data !== "") {
+      navigate("/result", {
+        state: {
+          fileImage: fileImage,
+          resultData: data,
+        },
+      });
     }
   }, [data]);
 
@@ -59,6 +64,8 @@ const InputImage = () => {
           console.log(error);
         }
         setLoading(false);
+
+       
       };
       
       fetchData();
@@ -68,12 +75,6 @@ const InputImage = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     setSubmitClick(!submitClick);
-
-    // navigate("/result", {
-    //   state: {
-    //     fileImage: fileImage,
-    //   },
-    // });
   };
 
   return (
