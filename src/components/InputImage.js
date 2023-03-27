@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
+import { NotificationContainer,NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 // import usePromise from "../lib/usePromise";
 
 import axios from "axios";
+
+
 
 const InputImage = () => {
   const navigate = useNavigate();
@@ -13,6 +19,7 @@ const InputImage = () => {
   const [submitClick, setSubmitClick] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState("");
+
 
   // 파일 저장
   const saveFileImage = (e) => {
@@ -37,6 +44,7 @@ const InputImage = () => {
         },
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
@@ -62,24 +70,32 @@ const InputImage = () => {
           });
         } catch (error) {
           console.log(error);
+          NotificationManager.warning('Request failed with status code 500.', 'ERROR! BAD_RESPONSE!', 5000);
         }
         setLoading(false);
-
-       
       };
-      
+
       fetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitClick]);
 
   const handleClick = async (e) => {
     e.preventDefault();
-    setSubmitClick(!submitClick);
+    // input 이미지가 없을시 에러창을 띄워주고 이미지가 있다면 useEffect를 통한 axios 처리를 위해 submitClick state를 변경
+    if (reqImage !== "") {
+      setSubmitClick(!submitClick);
+
+    } else {
+      NotificationManager.error('Input yout image!', 'Warning!', 5000);
+    }
   };
 
   return (
     <>
+     <NotificationContainer />
       <Container>
+      
         <div className="text-center">
           {fileImage && (
             <img
@@ -117,7 +133,7 @@ const InputImage = () => {
             </Col>
           </Row>
         </div>
-        <h1>{loading && "로딩중"}</h1>
+        <div>{loading && <Loading />}</div>
       </Container>
     </>
   );
