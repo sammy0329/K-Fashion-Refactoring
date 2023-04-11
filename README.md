@@ -6,4 +6,4 @@
 #npm install react-router-bootstrap
 #npm install --save axios
 #npm install react-spinners --save
-#npm install react-notifications-component
+#npm install --save react-notifications
