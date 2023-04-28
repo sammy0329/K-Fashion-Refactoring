@@ -4,14 +4,14 @@ import Layout from "../layouts/Layout";
 import Info from "../components/Info";
 import InputImage from "../components/InputImage";
 
-function Home() {
+function Home({titleUpdater}) {
   return (
     <Layout>
       <br />
       <IntervalsCarousel />
       <br />
       <Info />
-      <InputImage />
+      <InputImage titleUpdater={titleUpdater}/>
     </Layout>
   );
 }

@@ -2,7 +2,7 @@ import { Carousel, Container } from "react-bootstrap";
 
 function IntervalsCarousel() {
   return (
-    <Container fluid>
+    <Container>
       <Carousel>
         <Carousel.Item interval={3000}>
           <img

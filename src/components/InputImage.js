@@ -4,14 +4,11 @@ import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import { NotificationContainer,NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-
-// import usePromise from "../lib/usePromise";
-
 import axios from "axios";
 
 
 
-const InputImage = () => {
+const InputImage = ({titleUpdater}) => {
   const navigate = useNavigate();
   //파일 미리볼 url을 저장해줄 state
   const [fileImage, setFileImage] = useState("");
@@ -57,6 +54,8 @@ const InputImage = () => {
 
       const fetchData = async () => {
         setLoading(true);
+        // 타이틀 로딩중으로 변경
+        titleUpdater("Loading...")
         try {
           await axios({
             method: "post",
@@ -73,6 +72,7 @@ const InputImage = () => {
           NotificationManager.warning('Request failed with status code 500.', 'ERROR! BAD_RESPONSE!', 5000);
         }
         setLoading(false);
+        titleUpdater("K-Fashion Recomedation")
       };
 
       fetchData();
