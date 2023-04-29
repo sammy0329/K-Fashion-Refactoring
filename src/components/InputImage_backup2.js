@@ -11,11 +11,12 @@ import axios from "axios";
 
 const InputImage = ({ titleUpdater }) => {
   const navigate = useNavigate();
-
   //파일 미리볼 url을 저장해줄 state
+
   const [state, setState] = useState({
     fileImage: "",
     reqImage: "",
+    submitClick: false,
     loading: false,
     data: "",
   });
@@ -52,7 +53,7 @@ const InputImage = ({ titleUpdater }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.data]);
 
-  const postAxios = () => {
+  useEffect(() => {
     if (state.reqImage) {
       const formData = new FormData();
       formData.append("image", state.reqImage);
@@ -65,7 +66,6 @@ const InputImage = ({ titleUpdater }) => {
           ...state,
           loading: true,
         });
-        
         // 타이틀 로딩중으로 변경
         titleUpdater("Loading...");
         try {
@@ -84,7 +84,6 @@ const InputImage = ({ titleUpdater }) => {
           });
         } catch (error) {
           console.log(error);
-          
           NotificationManager.warning(
             "Request failed with status code 500.",
             "ERROR! BAD_RESPONSE!",
@@ -99,16 +98,21 @@ const InputImage = ({ titleUpdater }) => {
       };
 
       fetchData();
-    }else{
-      NotificationManager.error("Input yout image!", "Warning!", 5000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }
+  }, [state.submitClick]);
 
   const handleClick = async (e) => {
     e.preventDefault();
     // input 이미지가 없을시 에러창을 띄워주고 이미지가 있다면 useEffect를 통한 axios 처리를 위해 submitClick state를 변경
-    postAxios();
+    if (state.reqImage !== "") {
+      setState({
+        ...state,
+        submitClick: !state.submitClick,
+      });
+    } else {
+      NotificationManager.error("Input yout image!", "Warning!", 5000);
+    }
   };
 
   return (
@@ -135,7 +139,6 @@ const InputImage = ({ titleUpdater }) => {
                 type="file"
                 id="formFile"
                 accept="image/*"
-                disabled={state.loading}
                 onChange={(e) => {
                   deleteFileImage();
                   saveFileImage(e);
@@ -146,7 +149,6 @@ const InputImage = ({ titleUpdater }) => {
               <button
                 type="submit"
                 className="btn btn-primary"
-                disabled={state.loading}
                 onClick={handleClick}
               >
                 Submit
@@ -154,9 +156,8 @@ const InputImage = ({ titleUpdater }) => {
             </Col>
           </Row>
         </div>
+        <div>{state.loading && <Loading />}</div>
       </Container>
-
-      <div>{state.loading && <Loading />}</div>
     </>
   );
 };

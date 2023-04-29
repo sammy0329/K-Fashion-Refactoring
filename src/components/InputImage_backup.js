@@ -11,61 +11,57 @@ import axios from "axios";
 
 const InputImage = ({ titleUpdater }) => {
   const navigate = useNavigate();
-
   //파일 미리볼 url을 저장해줄 state
+  const [fileImage, setFileImage] = useState("");
+  const [reqImage, setReqImage] = useState("");
+  const [submitClick, setSubmitClick] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState("");
+
   const [state, setState] = useState({
     fileImage: "",
     reqImage: "",
+    submitClick: false,
     loading: false,
     data: "",
   });
-
+  
   // 파일 저장
   const saveFileImage = (e) => {
     // Blob URL Image는 img 태그에 src에 넣으면 가져올 수 있음
-    setState({
-      ...state,
-      reqImage: e.target.files[0],
-      fileImage: URL.createObjectURL(e.target.files[0]),
-    });
+    setReqImage(e.target.files[0]);
+    setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
   // 파일 삭제
   const deleteFileImage = () => {
-    URL.revokeObjectURL(state.fileImage);
-    setState({
-      ...state,
-      reqImage: "",
-      fileImage: "",
-    });
+    URL.revokeObjectURL(fileImage);
+    setFileImage("");
+    setReqImage("");
   };
 
   useEffect(() => {
-    if (state.data !== "") {
+    if (data !== "") {
       navigate("/result", {
         state: {
-          fileImage: state.fileImage,
-          resultData: state.data,
+          fileImage: fileImage,
+          resultData: data,
         },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.data]);
+  }, [data]);
 
-  const postAxios = () => {
-    if (state.reqImage) {
+  useEffect(() => {
+    if (reqImage) {
       const formData = new FormData();
-      formData.append("image", state.reqImage);
+      formData.append("image", reqImage);
       formData.append("enctype", "multipart/form-data");
 
       const url = "/image/";
 
       const fetchData = async () => {
-        setState({
-          ...state,
-          loading: true,
-        });
-        
+        setLoading(true);
         // 타이틀 로딩중으로 변경
         titleUpdater("Loading...");
         try {
@@ -77,38 +73,33 @@ const InputImage = ({ titleUpdater }) => {
               "Content-Type": "multipart/form-data",
             },
           }).then((response) => {
-            setState({
-              ...state,
-              data: response.data,
-            });
+            setData(response.data);
           });
         } catch (error) {
           console.log(error);
-          
           NotificationManager.warning(
             "Request failed with status code 500.",
             "ERROR! BAD_RESPONSE!",
             5000
           );
         }
-        setState({
-          ...state,
-          loading: false,
-        });
+        setLoading(false);
         titleUpdater("K-Fashion Recomedation");
       };
 
       fetchData();
-    }else{
-      NotificationManager.error("Input yout image!", "Warning!", 5000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }
+  }, [submitClick]);
 
   const handleClick = async (e) => {
     e.preventDefault();
     // input 이미지가 없을시 에러창을 띄워주고 이미지가 있다면 useEffect를 통한 axios 처리를 위해 submitClick state를 변경
-    postAxios();
+    if (reqImage !== "") {
+      setSubmitClick(!submitClick);
+    } else {
+      NotificationManager.error("Input yout image!", "Warning!", 5000);
+    }
   };
 
   return (
@@ -116,9 +107,9 @@ const InputImage = ({ titleUpdater }) => {
       <NotificationContainer />
       <Container>
         <div className="text-center">
-          {state.fileImage && (
+          {fileImage && (
             <img
-              src={state.fileImage}
+              src={fileImage}
               alt="preview-img"
               style={{ height: "80vh", width: "40vw" }}
             />
@@ -135,7 +126,6 @@ const InputImage = ({ titleUpdater }) => {
                 type="file"
                 id="formFile"
                 accept="image/*"
-                disabled={state.loading}
                 onChange={(e) => {
                   deleteFileImage();
                   saveFileImage(e);
@@ -146,7 +136,6 @@ const InputImage = ({ titleUpdater }) => {
               <button
                 type="submit"
                 className="btn btn-primary"
-                disabled={state.loading}
                 onClick={handleClick}
               >
                 Submit
@@ -154,9 +143,8 @@ const InputImage = ({ titleUpdater }) => {
             </Col>
           </Row>
         </div>
+        <div>{loading && <Loading />}</div>
       </Container>
-
-      <div>{state.loading && <Loading />}</div>
     </>
   );
 };
